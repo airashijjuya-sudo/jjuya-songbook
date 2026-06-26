@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>노래책</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo:wght@400;700;800&family=Kaisei+Decol:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/songbook.css" />
+  <link rel="stylesheet" href="css/modal.css" />
+</head>
+<body>
+
+<!-- ===== 헤더 ===== -->
+<header>
+  <div class="header-inner">
+    <div class="logo">🎵</div>
+    <nav id="mainNav">
+      <button class="nav-btn active" data-page="home">홈</button>
+      <button class="nav-btn" data-page="songbook">노래책</button>
+      <button class="nav-btn" data-page="mypick">마이픽</button>
+    </nav>
+    <div class="header-actions">
+      <div class="search-wrap" id="searchWrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="검색…" autocomplete="off" />
+      </div>
+      <label class="lyric-toggle" title="가사 포함 검색">
+        <input type="checkbox" id="searchLyrics" />
+        <span class="toggle-track"></span>
+        <span>가사 검색</span>
+      </label>
+      <button class="theme-btn" id="themeBtn" title="테마 전환">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- 홈 페이지 -->
+<div id="page-home" class="page active">
+  <div class="home-banner">
+    <img class="home-banner-img"
+      src="img/banner.jpg"
+      alt="배경인데요"
+      onerror="this.classList.add('error')" />
+  </div>
+  <div class="home-profile-area">
+    <div class="home-avatar-wrap">
+      <div class="home-avatar-circle">
+        <img class="home-avatar" src="img/profile.png" alt="프로필인데요" onerror="this.classList.add('error')">
+        <span class="home-avatar-fallback">🎵</span>
+      </div>
+    </div>
+    <div class="home-name">쭈야의 노래책</div>
+    <div class="home-handle">@AirashiJjuya</div>
+    <div class="home-bio">
+      아이라시 쭈야의 노래책입니다!<br>
+      노래 신청할 때 참고해주세요!<br>
+      마음에 드는 곡은 하트를 눌러 마이픽에 저장도 가능!
+    </div>
+    <div class="home-stats">
+      <div class="home-stat">
+        <span class="home-stat-num" id="statTotal">—</span>
+        <span class="home-stat-label">총 곡 수</span>
+      </div>
+      <div class="home-stat">
+        <span class="home-stat-num" id="statKo">—</span>
+        <span class="home-stat-label">한국어</span>
+      </div>
+      <div class="home-stat">
+        <span class="home-stat-num" id="statEn">—</span>
+        <span class="home-stat-label">English</span>
+      </div>
+      <div class="home-stat">
+        <span class="home-stat-num" id="statJa">—</span>
+        <span class="home-stat-label">日本語</span>
+      </div>
+      <div class="home-stat">
+        <span class="home-stat-num" id="statLiked">—</span>
+        <span class="home-stat-label">마이픽</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 노래책 페이지 -->
+<div id="page-songbook" class="page">
+  <main>
+    <div class="list-toolbar">
+      <p class="song-count">노래 <span id="countNum">0</span>곡</p>
+      <div class="toolbar-right">
+        <label class="lyric-toggle" id="recommendFilterWrapSongbook">
+          <input type="checkbox" id="recommendFilterSongbook" />
+          <span class="toggle-track"></span>
+          <span>쭈야픽만 보기</span>
+        </label>
+        <div class="sort-select-wrap">
+          <select class="sort-select" id="sortSelectSongbook">
+            <option value="newest">최신순</option>
+            <option value="oldest">오래된순</option>
+            <option value="title">제목순</option>
+            <option value="artist">가수순</option>
+            <option value="recommend">쭈야 추천순</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="cardsGrid">
+      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line xshort"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line xshort"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line xshort"></div></div></div>
+    </div>
+    <div id="emptyState">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      <p>검색 결과가 없습니다</p>
+    </div>
+    <div id="loadMoreTrigger"></div>
+  </main>
+</div>
+
+<!-- 마이픽 페이지 -->
+<div id="page-mypick" class="page">
+  <main>
+    <div class="list-toolbar">
+      <p class="song-count">마이픽 <span id="mypickCount">0</span>곡</p>
+      <div class="toolbar-right">
+        <label class="lyric-toggle" id="recommendFilterWrapMypick">
+          <input type="checkbox" id="recommendFilterMypick" />
+          <span class="toggle-track"></span>
+          <span>쭈야픽만 보기</span>
+        </label>
+        <div class="sort-select-wrap">
+          <select class="sort-select" id="sortSelectMypick">
+            <option value="newest">최신순</option>
+            <option value="oldest">오래된순</option>
+            <option value="title">제목순</option>
+            <option value="artist">가수순</option>
+            <option value="recommend">쭈야 추천순</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="mypickGrid"></div>
+    <div id="mypickEmpty">
+      <div class="mypick-empty-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <p>아직 마이픽이 없어요</p>
+      <small>노래책에서 ♡ 버튼을 눌러 곡을 추가해보세요</small>
+    </div>
+  </main>
+</div>
+
+<!-- 모달 -->
+<div id="modalOverlay" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-song-info">
+        <div class="modal-title" id="modalTitle">—</div>
+        <div class="modal-artist" id="modalArtist">—</div>
+        <div class="card-meta" id="modalMeta"></div>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="닫기">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="lyrics-panel" id="lyricsPanel">
+        <div class="lyrics-label">가사</div>
+        <div id="modalLyrics"></div>
+      </div>
+      <div class="video-panel">
+        <div style="display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap;">
+          <div class="record-container" id="recordContainer">
+            <div class="record-plate" id="recordPlate">
+              <div class="record-groove-1"></div>
+              <div class="record-groove-2"></div>
+              <div class="record-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                <div class="record-spindle"></div>
+              </div>
+            </div>
+            <div class="tonearm" id="tonearm">
+              <svg viewBox="0 0 60 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 8 C 38 28, 30 45, 22 72 L 12 88 L 8 93" stroke="var(--text3)" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="50" cy="8" r="7" fill="var(--purple2)" opacity="0.8"/>
+                <rect x="4" y="90" width="8" height="10" rx="2" transform="rotate(-12 4 90)" fill="var(--pink)" opacity="0.8"/>
+              </svg>
+            </div>
+          </div>
+          <div style="flex:1; min-width:140px; display:flex; flex-direction:column; gap:8px;">
+            <div id="videoToggle" class="video-toggle"></div>
+          </div>
+        </div>
+        <div id="videoArea"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

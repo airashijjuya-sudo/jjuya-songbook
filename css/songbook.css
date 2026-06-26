@@ -1,0 +1,157 @@
+/* ===========================================================
+   songbook.css — 노래책 / 마이픽 공통 (카드 그리드, 정렬바, 카드, 뱃지, 난이도 별점)
+   =========================================================== */
+
+#page-songbook main, #page-mypick main {
+  max-width: 1200px; margin: 0 auto; padding: 24px 20px 60px;
+}
+
+/* ===== 목록 상단 바 (개수 + 정렬) ===== */
+.list-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.toolbar-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.song-count {
+  font-size: 0.82rem; color: var(--text3); padding-left: 2px;
+}
+.song-count span { color: var(--purple2); font-weight: 600; }
+
+.sort-select-wrap {
+  position: relative; display: inline-flex; align-items: center;
+}
+.sort-select {
+  appearance: none; -webkit-appearance: none;
+  font-family: inherit; font-size: 0.8rem; color: var(--text2);
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 9px; padding: 6px 28px 6px 12px; cursor: pointer;
+  outline: none; transition: border-color 0.2s;
+}
+.sort-select:focus { border-color: var(--purple2); }
+.sort-select-wrap::after {
+  content: ''; position: absolute; right: 10px; top: 50%;
+  width: 7px; height: 7px; pointer-events: none;
+  border-right: 1.5px solid var(--text3); border-bottom: 1.5px solid var(--text3);
+  transform: translateY(-65%) rotate(45deg);
+}
+
+#cardsGrid, #mypickGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* ===== 노래 카드 ===== */
+.song-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
+  overflow: hidden; cursor: pointer;
+  transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s, background 0.2s;
+  box-shadow: var(--shadow2); position: relative; min-height: 140px;
+  display: flex; flex-direction: column;
+}
+.song-card:hover { transform: translateY(-4px) scale(1.015); box-shadow: var(--shadow); background: var(--card-hover); }
+.card-thumb-wrap {
+  position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; flex-shrink: 0;
+}
+.card-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card-thumb-placeholder {
+  width: 100%; aspect-ratio: 16/9;
+  background: linear-gradient(135deg, var(--purple3), var(--pink2));
+  display: flex; align-items: center; justify-content: center; opacity: 0.5;
+}
+.card-thumb-placeholder svg { width: 32px; height: 32px; color: white; }
+.card-body { padding: 10px 12px 12px; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.card-title {
+  font-family: 'Nanum Myeongjo', serif; font-weight: 700; font-size: 0.93rem;
+  color: var(--text); line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.card-artist { font-size: 0.78rem; color: var(--text2); }
+.card-artist-wrap { font-size: 0.78rem; color: var(--text2); display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap; }
+.card-artist-sep { color: var(--text3); font-size: 0.72rem; flex-shrink: 0; }
+.card-vocal { color: var(--text3); }
+@media (max-width: 720px) {
+  .card-artist-wrap { flex-direction: column; gap: 1px; }
+  .card-artist-sep { display: none; }
+  .card-vocal { font-size: 0.73rem; }
+}
+.modal-artist-wrap { font-size: 0.84rem; color: var(--text2); display: flex; align-items: baseline; gap: 5px; flex-wrap: wrap; }
+.modal-artist-sep { color: var(--text3); font-size: 0.78rem; }
+.modal-vocal { color: var(--text3); }
+@media (max-width: 480px) {
+  .modal-artist-wrap { flex-direction: column; gap: 1px; }
+  .modal-artist-sep { display: none; }
+}
+.card-meta { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+.lang-badge { font-size: 0.67rem; font-weight: 600; padding: 2px 6px; border-radius: 5px; letter-spacing: 0.02em; }
+.lang-ko { background: rgba(248,180,200,0.4); color: #b03070; }
+.lang-en { background: rgba(180,210,255,0.4); color: #305090; }
+.lang-ja { background: rgba(210,248,200,0.4); color: #307030; }
+[data-theme="dark"] .lang-ko { background: rgba(180,60,100,0.3); color: #f0a8c8; }
+[data-theme="dark"] .lang-en { background: rgba(60,100,180,0.3); color: #a8c8f8; }
+[data-theme="dark"] .lang-ja { background: rgba(60,150,60,0.3); color: #a8e8a0; }
+.tag-badge { font-size: 0.67rem; padding: 2px 6px; border-radius: 5px; background: var(--tag-bg); color: var(--tag-text); }
+
+/* ===== 난이도 별점 ===== */
+.card-difficulty {
+  display: flex; align-items: center; gap: 1px; margin-top: 6px;
+  line-height: 1;
+}
+.card-difficulty .star { font-size: 0.78rem; color: var(--star-empty); }
+.card-difficulty .star.filled { color: var(--star-fill); }
+
+/* ===== 마이픽 추가용 하트 버튼 ===== */
+.card-heart {
+  position: absolute; top: 8px; right: 8px;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: none; cursor: pointer;
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.18s cubic-bezier(.34,1.56,.64,1), background 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  z-index: 5;
+}
+[data-theme="dark"] .card-heart { background: rgba(30,10,45,0.72); }
+.card-heart:hover { transform: scale(1.18); }
+.card-heart svg { width: 14px; height: 14px; transition: all 0.15s; }
+.card-heart.liked svg { fill: #f43f5e; stroke: #f43f5e; }
+.card-heart:not(.liked) svg { fill: none; stroke: var(--text3); }
+.card-heart.pop { animation: heartPop 0.32s cubic-bezier(.34,1.56,.64,1); }
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* ===== 미쿠미쿠'빔' ===== */
+#emptyState {
+  grid-column: 1 / -1; text-align: center; padding: 80px 20px;
+  color: var(--text3); display: none;
+}
+#emptyState svg { width: 48px; height: 48px; margin: 0 auto 12px; opacity: 0.4; display: block; }
+#emptyState p { font-size: 0.95rem; }
+#loadMoreTrigger { height: 40px; }
+
+#mypickEmpty {
+  text-align: center; padding: 80px 20px; color: var(--text3);
+}
+#mypickEmpty p { font-size: 0.95rem; margin-bottom: 6px; }
+#mypickEmpty small { font-size: 0.8rem; opacity: 0.7; }
+.mypick-empty-icon {
+  width: 100px; height: 100px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple3), var(--pink2));
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 18px;
+  box-shadow: var(--shadow2);
+}
+.mypick-empty-icon svg { width: 38px; height: 38px; color: white; opacity: 0.85; }
+
+/* ===== 반응형 ===== */
+@media (max-width: 720px) {
+  #cardsGrid, #mypickGrid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+@media (max-width: 480px) {
+  #cardsGrid, #mypickGrid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+}
